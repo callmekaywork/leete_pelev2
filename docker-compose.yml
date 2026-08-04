@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:16
+    container_name: leeto_pele_container
+    restart: always
+    environment:
+      POSTGRES_USER: callmekay
+      POSTGRES_PASSWORD: leetopelecallmekay
+      POSTGRES_DB: leetepel_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # web:
+  #   build: .
+  #   container_name: nextjs_app
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     DATABASE_URL: postgres://myuser:mypassword@db:5432/mydatabase
+  #   depends_on:
+  #     - db
+
+volumes:
+  pgdata:
