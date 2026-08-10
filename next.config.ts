@@ -1,7 +1,10 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  turbopack: {
+    root: 'C:/Users/callmekay/Desktop/Leeto/leete_pelev2', // adjust to your actual project root
+  },
 };
 
 export default nextConfig;

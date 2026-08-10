@@ -1,37 +1,37 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const RequestSchema = z.object({
   name: z.string().min(3), // "A"
   email: z.string().email(), // "CWECSDF@mynwu.ac.za"
   company: z.string(), // "0" (could be z.number() if numeric)
   services: z.array(z.string()), // ["Market Positioning", "Digital Systems"]
-  status: z.enum(["new", "in_progress", "completed", "cancelled"]), // "new"
+  status: z.enum(['new', 'in_progress', 'completed', 'cancelled']), // "new"
   totalPrice: z.number().int().nonnegative(), // 7500
   date: z.coerce.date().optional(), // "2026-05-03T22:39:02.743Z"
 });
 
 export const ConsultFormSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  mobile: z.string().min(7, "Mobile number is required"),
+  name: z.string().min(2, 'Name is required'),
+  email: z.string().email('Invalid email address'),
+  mobile: z.string().min(7, 'Mobile number is required'),
 
-  contactMethod: z.enum(["Phone Call", "Email", "WhatsApp"]).default("Email"),
+  contactMethod: z.enum(['Phone Call', 'Email', 'WhatsApp']).default('Email'),
 
   hasBusiness: z.boolean(),
   businessName: z.string().min(2).optional(),
   industry: z.string().optional(),
   businessStage: z.string().optional(),
-  website: z.string("Invalid website URL").optional(),
+  website: z.string('Invalid website URL').optional(),
 
-  challenge: z.string().min(10, "Please describe your challenge"),
-  clarityGoal: z.string().min(2, "Please describe your clarity goal"),
+  challenge: z.string().min(10, 'Please describe your challenge'),
+  clarityGoal: z.string().min(2, 'Please describe your clarity goal'),
   implementationReady: z
     .string()
-    .min(2, "Implementation readiness is required"),
+    .min(2, 'Implementation readiness is required'),
 
-  status: z.enum(["pending", "confirmed", "cancelled"]),
-  preferredDateTime: z.string().min(2, "Preferred date/time is required"),
-  date: z.string().min(2, "Date is required"),
+  status: z.enum(['pending', 'confirmed', 'cancelled']),
+  preferredDateTime: z.string().min(2, 'Preferred date/time is required'),
+  date: z.string().min(2, 'Date is required'),
 });
 
 export const applicationFormSchema = z.object({
@@ -43,65 +43,65 @@ export const applicationFormSchema = z.object({
 
 export const StartupFormSchema = z.object({
   // Personal Info
-  firstName: z.string().min(2, "First name is required"),
-  lastName: z.string().min(2, "Last name is required"),
-  email: z.email("Invalid email address"),
-  role: z.string().min(2, "Role is required"),
-  linkedin: z.string("Invalid LinkedIn URL").optional(),
+  firstName: z.string().min(2, 'First name is required'),
+  lastName: z.string().min(2, 'Last name is required'),
+  email: z.email('Invalid email address'),
+  role: z.string().min(2, 'Role is required'),
+  linkedin: z.string('Invalid LinkedIn URL').optional(),
 
   // Startup Info
-  startupName: z.string().min(2, "Startup name is required"),
-  industry: z.string().min(2, "Industry is required"),
-  stage: z.enum(["Idea", "MVP", "Early Traction", "Scaling", "Established"]),
-  teamSize: z.coerce.number().min(1, "Team size must be at least 1"),
-  website: z.string("Invalid website URL").optional(),
+  startupName: z.string().min(2, 'Startup name is required'),
+  industry: z.string().min(2, 'Industry is required'),
+  stage: z.enum(['Idea', 'MVP', 'Early Traction', 'Scaling', 'Established']),
+  teamSize: z.coerce.number().min(1, 'Team size must be at least 1'),
+  website: z.string('Invalid website URL').optional(),
 
   // Business Details
-  description: z.string().min(10, "Description must be at least 10 characters"),
-  currentChallenges: z.string().min(10, "Please describe your challenges"),
-  revenueModel: z.string().min(2, "Revenue model is required"),
+  description: z.string().min(10, 'Description must be at least 10 characters'),
+  currentChallenges: z.string().min(10, 'Please describe your challenges'),
+  revenueModel: z.string().min(2, 'Revenue model is required'),
 
   // Mentorship Goals
-  goals: z.string().min(10, "Please describe your goals"),
+  goals: z.string().min(10, 'Please describe your goals'),
   preferredExpertise: z
     .array(z.string())
-    .min(1, "Select at least one area of expertise"),
-  commitmentLevel: z.string().min(2, "Commitment level is required").optional(),
+    .min(1, 'Select at least one area of expertise'),
+  commitmentLevel: z.string().min(2, 'Commitment level is required').optional(),
 });
 
 export const CorporateFormSchema = z.object({
   // Personal Info
-  firstName: z.string().min(2, "First name is required"),
-  lastName: z.string().min(2, "Last name is required"),
-  email: z.string().email("Invalid email address"),
-  role: z.string().min(2, "Role is required"),
-  linkedin: z.string("Invalid LinkedIn URL").optional(),
+  firstName: z.string().min(2, 'First name is required'),
+  lastName: z.string().min(2, 'Last name is required'),
+  email: z.string().email('Invalid email address'),
+  role: z.string().min(2, 'Role is required'),
+  linkedin: z.string('Invalid LinkedIn URL').optional(),
 
   // Corporate Info
-  companyName: z.string().min(2, "Company name is required"),
-  industry: z.string().min(2, "Industry is required"),
-  size: z.coerce.number().min(1, "Company size must be at least 1"),
-  website: z.string("Invalid website URL").optional(),
+  companyName: z.string().min(2, 'Company name is required'),
+  industry: z.string().min(2, 'Industry is required'),
+  size: z.coerce.number().min(1, 'Company size must be at least 1'),
+  website: z.string('Invalid website URL').optional(),
 
   // Business Details
-  description: z.string().min(10, "Description must be at least 10 characters"),
-  currentChallenges: z.string().min(10, "Please describe your challenges"),
-  revenueModel: z.string().min(2, "Revenue model is required"),
+  description: z.string().min(10, 'Description must be at least 10 characters'),
+  currentChallenges: z.string().min(10, 'Please describe your challenges'),
+  revenueModel: z.string().min(2, 'Revenue model is required'),
 
   // Mentorship Goals
-  goals: z.string().min(10, "Please describe your goals"),
+  goals: z.string().min(10, 'Please describe your goals'),
   preferredExpertise: z
     .array(z.string())
-    .min(1, "Select at least one area of expertise"),
-  commitmentLevel: z.string().min(2, "Commitment level is required").optional(),
+    .min(1, 'Select at least one area of expertise'),
+  commitmentLevel: z.string().min(2, 'Commitment level is required').optional(),
 });
 
 export const personSchema = z.object({
-  firstName: z.string().min(2, "First name is required"),
-  lastName: z.string().min(2, "Last name is required"),
-  email: z.string().email("Invalid email address"),
-  role: z.string().min(2, "Role is required"),
-  linkedin: z.string().url("Invalid LinkedIn URL").or(z.string().length(0)),
+  firstName: z.string().min(2, 'First name is required'),
+  lastName: z.string().min(2, 'Last name is required'),
+  email: z.string().email('Invalid email address'),
+  role: z.string().min(2, 'Role is required'),
+  linkedin: z.string().url('Invalid LinkedIn URL').or(z.string().length(0)),
 });
 
 export const startupSchema = z.object({
@@ -131,7 +131,7 @@ export const individualSchema = z.object({
 });
 
 export const postSchema = z.object({
-  id: z.string().optional().default(""),
+  id: z.string().optional().default(''),
   authorId: z.string(),
   title: z.string().min(1).max(200),
   slug: z
@@ -139,22 +139,55 @@ export const postSchema = z.object({
     .min(1)
     .max(200)
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
-      message: "Slug must be URL-friendly (lowercase, hyphens)",
+      message: 'Slug must be URL-friendly (lowercase, hyphens)',
     }),
   content: z.string().min(1),
   excerpt: z.string().optional(),
   coverImageUrl: z.string().optional(),
   published: z.boolean().default(false),
-  publishedAt: z.preprocess((val) => {
+  publishedAt: z.preprocess(val => {
     if (!val) return undefined;
     const d = new Date(val as string);
     return isNaN(d.getTime()) ? undefined : d;
   }, z.date().optional()),
-  endDate: z.preprocess((val) => {
+  endDate: z.preprocess(val => {
     if (!val) return undefined;
     const d = new Date(val as string);
     return isNaN(d.getTime()) ? undefined : d;
   }, z.date().optional()),
 
   updatedAt: z.date().optional(),
+});
+
+export const driverSchema = z.object({
+  id: z.string(),
+  userId: z.string(), // references users.id
+  avatar: z.string().url(),
+  rating: z.number().min(0).max(5),
+  totalTrips: z.number().int().nonnegative(),
+  carModel: z.string().min(1),
+  carColor: z.string().min(1),
+  plateNumber: z.string().min(1),
+  phone: z.string().min(7),
+  currentPos: z.tuple([z.number(), z.number()]),
+  capacity: z.number().int().positive(),
+  occupiedSeats: z.number().int().min(0),
+});
+
+// Zod schema
+export const bookingSchema = z.object({
+  id: z.string(),
+  driverId: z.string(),
+  driverName: z.string().min(1),
+  carModel: z.string().min(1),
+  plateNumber: z.string().min(1),
+  bookingDate: z.string(), // ISO date string
+  passengerName: z.string().min(1),
+  passengerPhone: z.string().min(7),
+  notes: z.string().optional(),
+  seatsBooked: z.number().int().positive(),
+  pickup: z.string().min(1),
+  dropoff: z.string().min(1),
+  createdAt: z.string().datetime(), // ISO timestamp
+  status: z.enum(['confirmed', 'pending', 'cancelled']),
 });

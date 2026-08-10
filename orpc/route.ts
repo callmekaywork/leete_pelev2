@@ -1,33 +1,33 @@
-import { email, z } from "zod";
+import { email, z } from 'zod';
 
-import { db } from "@/db";
+import { db } from '@/db';
 
-import { accounts, users } from "@/db/schema";
-import type { IncomingHttpHeaders } from "node:http";
-import { os } from "@orpc/server";
+import { accounts, users } from '@/db/schema';
+import type { IncomingHttpHeaders } from 'node:http';
+import { os } from '@orpc/server';
 
 // import { systems_requests, reach_request } from "@/db/schema";
 
-import { eq, or, and, desc, ne, sql } from "drizzle-orm";
+import { eq, or, and, desc, ne, sql } from 'drizzle-orm';
 // import { signIn, signOut } from '@/auth';
 
-import bcrypt from "bcrypt";
-import { nanoid } from "nanoid";
+import bcrypt from 'bcrypt';
+import { nanoid } from 'nanoid';
 
-import { signIn, signOut } from "@/auth";
+import { signIn, signOut } from '@/auth';
 
 const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
 });
 
-const driverRegisterSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-  identification: z.string().min(13),
-  driversLicense: z.string().min(6),
-  passwordConfirmation: z.string().min(6),
-});
+// const driverRegisterSchema = z.object({
+//   email: z.string().email(),
+//   password: z.string().min(6),
+//   identification: z.string().min(13),
+//   driversLicense: z.string().min(6),
+//   passwordConfirmation: z.string().min(6),
+// });
 
 export const authCheckemail = os
   .$context<{ headers: IncomingHttpHeaders }>()
@@ -57,11 +57,11 @@ export const loginOutput = os
       .from(users)
       .where(eq(users.email, email))
       .limit(1)
-      .then((res) => res[0]);
+      .then(res => res[0]);
 
     if (!user) {
-      console.log("user was invalid");
-      throw new Error("Invalid credentials");
+      console.log('user was invalid');
+      throw new Error('Invalid credentials');
     }
 
     // 2. Check accounts
@@ -74,20 +74,20 @@ export const loginOutput = os
     if (check.length > 0) {
       await db
         .update(accounts)
-        .set({ session_state: "updatedcredentials" })
+        .set({ session_state: 'updatedcredentials' })
         .where(eq(accounts.userId, user.id));
     } else {
       await db.insert(accounts).values({
         userId: user.id,
-        type: "email",
-        provider: "credentials",
+        type: 'email',
+        provider: 'credentials',
         providerAccountId: user.id,
-        session_state: "newcredentials",
+        session_state: 'newcredentials',
       });
     }
 
     // sign us in
-    const checkSignIn = await signIn("credentials", {
+    const checkSignIn = await signIn('credentials', {
       email,
       password,
       redirect: false,
@@ -104,7 +104,7 @@ export const loginOutput = os
         role: user.role, // if role == admin show this part of the code
       };
     else {
-      return { error: "something went wrong!" };
+      return { error: 'something went wrong!' };
     }
   });
 
@@ -122,5 +122,5 @@ export const router = {
   },
 };
 function getServerSession(authOptions: any) {
-  throw new Error("Function not implemented.");
+  throw new Error('Function not implemented.');
 }
