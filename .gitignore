@@ -20,6 +20,9 @@
 # production
 /build
 /migrations
+/components\booking\seatselection.tsx
+/components\booking\driverslection.tsx
+/scripts\seed_drivers.ts
 
 # misc
 .DS_Store
