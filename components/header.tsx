@@ -12,7 +12,7 @@ export default function Header() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <header className="w-full md:h-40 px-2 md:px-8 py-3 flex items-center justify-between ">
+    <header className="w-full md:h-40 px-2 md:px-8 py-3 flex items-center justify-between dark:bg-black">
       {/* Brand Badge with Home Navigation */}
       <div className="pointer-events-auto bg-[#18181B]/90 text-white backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-xl border border-zinc-800 flex items-center gap-3">
         <Link

@@ -23,10 +23,12 @@ import {
   Calendar,
   Car,
   CheckCircle2,
+  Navigation,
   Sparkles,
   Users,
 } from 'lucide-react';
 import { INITIAL_DRIVERS } from '@/lib/routing';
+import { useSession } from 'next-auth/react';
 
 const DEFAULT_RIDE_OPTION: RideOption = {
   id: 'bolt_standard',
@@ -42,18 +44,24 @@ const DEFAULT_RIDE_OPTION: RideOption = {
 };
 
 export default function Home() {
+  const { data: session, status } = useSession();
+
+  const [isUser, setUser] = useState(false);
+
+  if (status === 'authenticated') {
+    setUser(true);
+  }
+
   return (
     <div className="flex flex-col flex-1 items-center  bg-zinc-50 font-sans dark:bg-black">
-      <Header />
-
       {/* </main> */}
 
       {/* Main Hero Content */}
       <main className="relative z-10 max-w-6xl w-full mx-auto px-6 py-12 md:py-16 flex flex-col items-center text-center gap-8">
         {/* Hero Title */}
         <div className="flex flex-col gap-4 max-w-3xl">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.1]">
-            Reserve Your Shuttle Seats in{' '}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-black dark:text-white tracking-tight leading-[1.1]">
+            Reserve Your Ride Seat in{' '}
             <span className="text-[#32BB78]">Real-Time</span>
           </h1>
           <p className="text-base sm:text-lg text-zinc-400 font-normal max-w-2xl mx-auto leading-relaxed">
@@ -74,10 +82,20 @@ export default function Home() {
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
 
-          <button className="w-full sm:w-auto px-6 py-4 bg-[#18181B] hover:bg-zinc-800 text-zinc-200 font-bold text-sm rounded-2xl border border-zinc-800 transition-all flex items-center justify-center gap-2">
-            <Car className="w-4 h-4 text-[#32BB78]" />
-            <span>Driver Portal</span>
-          </button>
+          {!isUser ? (
+            <Link
+              href={'/driverportal/newdriver'}
+              className="w-full sm:w-auto px-6 py-4 bg-[#18181B] hover:bg-zinc-800 text-zinc-200 font-bold text-sm rounded-2xl border border-zinc-800 transition-all flex items-center justify-center gap-2"
+            >
+              <Car className="w-4 h-4 text-[#32BB78]" />
+              <span>Driver Portal</span>
+            </Link>
+          ) : (
+            <button className="w-full sm:w-auto px-6 py-4 bg-[#18181B] hover:bg-zinc-800 text-zinc-200 font-bold text-sm rounded-2xl border border-zinc-800 transition-all flex items-center justify-center gap-2">
+              <Car className="w-4 h-4 text-[#32BB78]" />
+              <span>Got to Dashboard</span>
+            </button>
+          )}
         </div>
 
         {/* Feature Cards Grid */}
@@ -118,9 +136,10 @@ export default function Home() {
           </div>
 
           {/* Card 3 */}
-          <div className="bg-[#18181B] p-6 rounded-3xl border border-zinc-800/80 hover:border-[#32BB78]/40 transition-colors flex flex-col gap-3 shadow-xl">
+          <div className=" dark:bg-[#18181B] p-6 rounded-3xl border border-zinc-800/80 hover:border-[#32BB78]/40 transition-colors flex flex-col gap-3 shadow-xl">
             <div className="w-12 h-12 rounded-2xl bg-[#32BB78]/10 text-[#32BB78] border border-[#32BB78]/20 flex items-center justify-center">
               {/* <Navigation className="w-6 h-6" /> */}
+              <Navigation />
             </div>
             <h3 className="text-lg font-extrabold text-white">
               Live Route & Driver View
@@ -149,7 +168,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 w-full md:w-auto">
+          {/* <div className="flex flex-wrap items-center justify-center gap-3 w-full md:w-auto">
             {INITIAL_DRIVERS.slice(0, 3).map(driver => (
               <div
                 key={driver.id}
@@ -170,7 +189,7 @@ export default function Home() {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </main>
     </div>

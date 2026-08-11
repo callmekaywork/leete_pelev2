@@ -15,6 +15,7 @@ import bcrypt from 'bcrypt';
 import { nanoid } from 'nanoid';
 
 import { signIn, signOut } from '@/auth';
+import { Step1PersonalSchema } from '@/db/validationschemas';
 
 const LoginSchema = z.object({
   email: z.string().email(),
@@ -108,6 +109,19 @@ export const loginOutput = os
     }
   });
 
+export const RegisterDriver = os
+  .$context<{ headers: IncomingHttpHeaders }>()
+  .input(Step1PersonalSchema)
+  .handler(async ({ input }) => {
+    const addDriver = await db.insert(users).values({
+      firstname: input.firstName,
+      lastname: input.lastName,
+      email: input.email,
+      password: input.confirmPassword,
+      role: 'driver',
+    });
+  });
+
 export const router = {
   admin: {
     auth: loginOutput,
@@ -119,6 +133,9 @@ export const router = {
         signOut();
         // redirect('/');
       }),
+  },
+  driver: {
+    create: RegisterDriver,
   },
 };
 function getServerSession(authOptions: any) {

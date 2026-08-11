@@ -146,33 +146,7 @@ export default function RideBookingPanel({
   };
 
   return (
-    <div className="bg-[#d4d4d4] dark:bg-[#18181B] text-zinc-100 rounded-3xl p-5 shadow-2xl border border-zinc-800 flex flex-col gap-4 w-full lg:max-w-lg ">
-      {/* Brand & Booking Header */}
-      <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
-        <div>
-          <div className="flex items-center gap-2">
-            <h2 className="text-xl font-bold tracking-tight text-white">
-              Book Ride Seats
-            </h2>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#32BB78]/10 text-[#32BB78] border border-[#32BB78]/20">
-              Booking Platform
-            </span>
-          </div>
-          <p className="text-xs text-zinc-400 mt-0.5">
-            Pick date, route & choose available driver vehicle
-          </p>
-        </div>
-
-        <div className="text-right">
-          <span className="text-xs font-semibold text-zinc-400 block">
-            Route Distance
-          </span>
-          <span className="text-sm font-bold text-zinc-200">
-            {distanceKm} km (~{estimatedTimeMin} mins)
-          </span>
-        </div>
-      </div>
-
+    <div className="bg-[#f1f1f1] dark:bg-[#18181B] text-zinc-100 rounded-3xl p-5 flex flex-col gap-4 w-full lg:max-w-lg">
       {/* Date Selector Row */}
       <div className="bg-zinc-900/90 p-3 rounded-2xl border border-zinc-800 flex flex-col gap-2">
         <div className="flex items-center justify-between text-xs">
@@ -419,33 +393,6 @@ export default function RideBookingPanel({
             {eligibleDrivers.length} Available
           </span>
         </div>
-
-        {/* Auto Assign Option */}
-        <button
-          onClick={() => setSelectedDriverId('auto')}
-          className={`p-3 rounded-xl border text-left transition-all flex items-center justify-between ${
-            selectedDriverId === 'auto'
-              ? 'bg-[#32BB78]/15 border-[#32BB78] text-white shadow-sm'
-              : 'bg-[#18181B] border-zinc-800 text-zinc-300 hover:border-zinc-700'
-          }`}
-        >
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#32BB78] text-zinc-950 flex items-center justify-center font-black shrink-0">
-              <Sparkles className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="block text-xs font-extrabold text-white">
-                Auto-Match Best Available Driver
-              </span>
-              <span className="block text-[11px] text-zinc-400">
-                Assigns closest driver with ≥{seatsBooked} seats open
-              </span>
-            </div>
-          </div>
-          {selectedDriverId === 'auto' && (
-            <CheckCircle2 className="w-5 h-5 text-[#32BB78] shrink-0" />
-          )}
-        </button>
 
         {/* Explicit Driver Vehicle List */}
         <div className="flex flex-col gap-2 max-h-56 overflow-y-auto no-scrollbar pr-1">

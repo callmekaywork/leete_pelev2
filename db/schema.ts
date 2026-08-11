@@ -32,7 +32,7 @@ export const users = pgTable('users', {
   email: text('email').notNull().unique(),
   password: text('password').notNull(),
   role: text('role')
-    .$type<'admin' | 'staff' | 'user'>()
+    .$type<'admin' | 'staff' | 'user' | 'driver'>()
     .notNull()
     .default('staff'),
   image: text('image'),
@@ -114,22 +114,61 @@ export const authenticators = pgTable(
   ],
 );
 
-// Drivers table
 export const drivers = pgTable('drivers', {
-  id: varchar('id', { length: 50 }).primaryKey(),
+  id: text('uID')
+    .primaryKey()
+    .$defaultFn(() => id)
+    .unique(),
+
+  // Link to base user record
   userId: varchar('user_id', { length: 50 })
     .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }), // FK to users table
-  avatar: text('avatar').notNull(),
-  rating: numeric('rating', { precision: 4, scale: 2 }).notNull(),
-  totalTrips: integer('total_trips').notNull(),
-  carModel: text('car_model').notNull(),
-  carColor: text('car_color').notNull(),
-  plateNumber: varchar('plate_number', { length: 20 }).notNull(),
+    .references(() => users.id, { onDelete: 'cascade' }),
+
+  // Personal info (beyond users table)
   phone: varchar('phone', { length: 20 }).notNull(),
+  dateOfBirth: date('date_of_birth').notNull(),
+  city: varchar('city', { length: 100 }).notNull(),
+  address: text('address').notNull(),
+
+  // Background check
+  nationalIdOrSSN: varchar('national_id_or_ssn', { length: 50 }).notNull(),
+  driverLicenseNumber: varchar('driver_license_number', {
+    length: 50,
+  }).notNull(),
+  licenseExpiryDate: date('license_expiry_date').notNull(),
+  drivingExperienceYears: integer('driving_experience_years').notNull(),
+  hasCriminalRecord: boolean('has_criminal_record').notNull(),
+  criminalRecordExplanation: text('criminal_record_explanation'),
+  consentBackgroundCheck: boolean('consent_background_check').notNull(),
+  consentTerms: boolean('consent_terms').notNull(),
+  signatureName: varchar('signature_name', { length: 100 }).notNull(),
+
+  // Vehicle info
+  vehicleCategory: varchar('vehicle_category', { length: 50 }).notNull(),
+  make: varchar('make', { length: 100 }).notNull(),
+  model: varchar('model', { length: 100 }).notNull(),
+  year: integer('year').notNull(),
+  color: varchar('color', { length: 50 }).notNull(),
+  licensePlate: varchar('license_plate', { length: 20 }).notNull(),
+  seatsCount: integer('seats_count').notNull(),
+  fuelType: varchar('fuel_type', { length: 50 }).notNull(),
+
+  // Documents (store as URLs or file references)
+  licenseFront: text('license_front').notNull(),
+  licenseBack: text('license_back').notNull(),
+  vehicleRegistration: text('vehicle_registration').notNull(),
+  vehicleInsurance: text('vehicle_insurance').notNull(),
+  vehicleInspection: text('vehicle_inspection').notNull(),
+  profilePhoto: text('profile_photo').notNull(),
+
+  // Operational metadata
+  avatar: text('avatar'),
+  rating: numeric('rating', { precision: 4, scale: 2 }).default('0'),
+  totalTrips: integer('total_trips').default(0),
   currentPos: jsonb('current_pos').$type<[number, number]>(),
-  capacity: integer('capacity').notNull(),
-  occupiedSeats: integer('occupied_seats').notNull(),
+  capacity: integer('capacity').default(4),
+  occupiedSeats: integer('occupied_seats').default(0),
 });
 
 // Relations

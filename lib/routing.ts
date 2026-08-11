@@ -3,15 +3,15 @@ import { LocationPoint, DriverInfo } from './types';
 // Preset popular locations in the city hub
 export const PRESET_LOCATIONS: LocationPoint[] = [
   {
-    name: 'Central Station',
-    address: '100 Main St, Transit Hub',
+    name: 'Mafikeng',
+    address: 'Denville',
     lat: -25.8653,
     lng: 25.6442,
   },
 
   {
-    name: 'International Airport',
-    address: 'Terminal 2, Arrivals Gate B',
+    name: 'Johannesburg',
+    address: 'MTN Rank',
     lat: -26.2041,
     lng: 28.0473,
   },

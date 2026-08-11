@@ -127,3 +127,17 @@ const DEFAULT_BOOKINGS: BookingRecord[] = [
     status: 'confirmed',
   },
 ];
+
+// Helper: Calculate age in years from YYYY-MM-DD
+export function calculateAge(dobString: string): number {
+  if (!dobString) return 0;
+  const dob = new Date(dobString);
+  if (isNaN(dob.getTime())) return 0;
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const m = today.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+    age--;
+  }
+  return age;
+}

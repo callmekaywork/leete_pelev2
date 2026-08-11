@@ -1,14 +1,17 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Geist, Geist_Mono, JetBrains_Mono } from 'next/font/google';
+import { Geist_Mono, JetBrains_Mono, Roboto } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
 import { Toaster } from '@/components/ui/sonner';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+import Image from 'next/image';
+import Header from '@/components/header';
+
+const roboto = Roboto({
+  subsets: ['latin'], // choose subsets you need
+  weight: ['400', '500', '700'], // pick font weights
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -37,7 +40,7 @@ export default function RootLayout({
       className={cn(
         'h-full',
         'antialiased',
-        geistSans.variable,
+        roboto.className,
         geistMono.variable,
         'font-mono',
         jetbrainsMono.variable,
@@ -53,7 +56,17 @@ export default function RootLayout({
         >
           <SessionProvider>
             <Toaster />
+            <Header />
             {children}
+            <footer className="flex flex-row p-10 items-center gap-4">
+              <Image
+                src="/vercel.ico"
+                width={80}
+                height={80}
+                alt="leeto_pelo_logo"
+              />
+              <h1>Leeto Pele Transportation</h1>
+            </footer>
           </SessionProvider>
         </ThemeProvider>
       </body>

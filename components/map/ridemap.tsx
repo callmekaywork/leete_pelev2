@@ -15,6 +15,7 @@ import {
 import 'leaflet/dist/leaflet.css';
 
 import L, { LatLng, LeafletMouseEvent } from 'leaflet';
+import { useTheme } from 'next-themes';
 
 export interface CachedRoute {
   id: string; // key e.g. "san francisco|oakland"
@@ -61,6 +62,9 @@ export default function RideMap({
   const [isPlayingDriverAnim, setIsPlayingDriverAnim] = useState(true);
   const animFrameRef = useRef<number | null>(null);
   const animProgressRef = useRef<number>(0);
+
+  // themes
+  const { theme, setTheme } = useTheme();
 
   // Handle Tile Layer updates
   const updateTileLayer = (L: any, map: any, style: string) => {
@@ -133,7 +137,21 @@ export default function RideMap({
     if (mapInstanceRef.current && leafletRef.current) {
       updateTileLayer(leafletRef.current, mapInstanceRef.current, mapStyle);
     }
+
+    // if (theme == mapInstanceRef.current && theme == 'light') {
+    //   setTheme('light');
+    // } else {
+    //   setTheme('dark');
+    // }
   }, [mapStyle]);
+
+  useEffect(() => {
+    if (theme == 'dark') {
+      setMapStyle(theme);
+    } else {
+      setMapStyle('light');
+    }
+  }, [theme]);
 
   // Update Markers, Polyline & Driver animation when route changes
   useEffect(() => {
@@ -243,7 +261,10 @@ export default function RideMap({
         {/* Style Selector */}
         <div className="bg-white/90 backdrop-blur-md p-1.5 rounded-2xl shadow-lg border border-slate-200 flex items-center gap-1">
           <button
-            onClick={() => setMapStyle('light')}
+            onClick={() => {
+              setMapStyle('light');
+              setTheme('light');
+            }}
             className={`p-2 rounded-xl text-xs font-bold transition-all ${
               mapStyle === 'light'
                 ? 'bg-slate-900 text-white shadow-xs'
@@ -254,7 +275,10 @@ export default function RideMap({
             <Sun className="w-4 h-4" />
           </button>
           <button
-            onClick={() => setMapStyle('dark')}
+            onClick={() => {
+              setMapStyle('dark');
+              setTheme('dark');
+            }}
             className={`p-2 rounded-xl text-xs font-bold transition-all ${
               mapStyle === 'dark'
                 ? 'bg-slate-900 text-white shadow-xs'
