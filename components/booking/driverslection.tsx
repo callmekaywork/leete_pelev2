@@ -11,6 +11,7 @@ import {
   AlertCircle,
   ShieldCheck,
 } from 'lucide-react';
+import { getDriverRemainingSeats } from '../rideFunctions/tempFuncitons';
 
 interface DriverSelectionTabProps {
   drivers: DriverInfo[];

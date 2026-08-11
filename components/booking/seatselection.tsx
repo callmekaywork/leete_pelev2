@@ -2,11 +2,7 @@
 
 import React from 'react';
 import { DriverInfo } from '@/lib/types';
-import {
-  getTodayDateString,
-  getTomorrowDateString,
-  getDriverRemainingSeats,
-} from '@/lib/db';
+
 import {
   Users,
   Calendar,
@@ -15,6 +11,11 @@ import {
   ShieldCheck,
   AlertCircle,
 } from 'lucide-react';
+import {
+  getTodayDateString,
+  getTomorrowDateString,
+} from '@/lib/dateCalculations/dateCalc';
+import { getDriverRemainingSeats } from '../rideFunctions/tempFuncitons';
 
 interface SeatSelectionTabProps {
   seatsBooked: number;
