@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1785841973155,
-      "tag": "0000_skinny_kronos",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1786405930362,
-      "tag": "0001_slippery_captain_midlands",
+      "when": 1786418167323,
+      "tag": "0000_lumpy_killmonger",
       "breakpoints": true
     }
   ]

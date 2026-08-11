@@ -23,7 +23,7 @@ import { relations, sql } from 'drizzle-orm';
 const id = nanoid(50);
 
 export const users = pgTable('users', {
-  id: text('uID')
+  id: text('id')
     .primaryKey()
     .$defaultFn(() => id)
     .unique(),
@@ -115,7 +115,7 @@ export const authenticators = pgTable(
 );
 
 export const drivers = pgTable('drivers', {
-  id: text('uID')
+  id: text('id')
     .primaryKey()
     .$defaultFn(() => id)
     .unique(),
@@ -171,18 +171,22 @@ export const drivers = pgTable('drivers', {
   occupiedSeats: integer('occupied_seats').default(0),
 });
 
-// Relations
-export const driversRelations = relations(drivers, ({ one }) => ({
+export const driversRelations = relations(drivers, ({ one, many }) => ({
   user: one(users, {
     fields: [drivers.userId],
     references: [users.id],
   }),
+  bookings: many(bookings),
 }));
 
 // Bookings table
 export const bookings = pgTable('bookings', {
   id: varchar('id', { length: 50 }).primaryKey(),
-  driverId: varchar('driver_id', { length: 50 }).notNull(),
+  // Link to base user record
+  driverId: varchar('driverId', { length: 50 })
+    .notNull()
+    .references(() => drivers.id, { onDelete: 'cascade' }),
+
   driverName: text('driver_name').notNull(),
   carModel: text('car_model').notNull(),
   plateNumber: varchar('plate_number', { length: 20 }).notNull(),
@@ -196,3 +200,10 @@ export const bookings = pgTable('bookings', {
   createdAt: timestamp('created_at', { withTimezone: false }).notNull(),
   status: varchar('status', { length: 20 }).notNull(), // e.g., confirmed, pending, cancelled
 });
+
+export const bookingsRelations = relations(bookings, ({ one }) => ({
+  driver: one(drivers, {
+    fields: [bookings.driverId],
+    references: [drivers.id],
+  }),
+}));
